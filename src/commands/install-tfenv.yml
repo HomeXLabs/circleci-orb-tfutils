@@ -25,7 +25,7 @@ steps:
 
         echo "Installing ${TFENV_VERSION} of tfenv"
 
-        curl -s -o tfenv.zip https://github.com/tfutils/tfenv/archive/v<< parameters.tfenv-version >>.zip
+        curl -s -o tfenv.zip https://github.com/tfutils/tfenv/archive/${TFENV_VERSION}.zip
 
         mkdir -p ~/.tfenv
         unzip tfenv.zip -d ~/.tfenv/
