@@ -13,11 +13,17 @@ parameters:
     type: string
     description: Install a specific version of Terraform.
     default: latest
+  tflint-version:
+    type: string
+    description: Install a specific version of tflint.
+    default: latest
 
 steps:
   - checkout
   - install-terraform:
       terraform-version: << parameters.terraform-version >>
+  - install-tflint:
+      tflint-version: << parameters.tflint-version >>
   - write-tfc-credentials:
       terraform-token: << parameters.terraform-token >>
   - check-terraform-fmt
