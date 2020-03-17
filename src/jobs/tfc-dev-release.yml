@@ -44,4 +44,3 @@ steps:
       module-name: << parameters.module-name >>
       oauth-token-id: << parameters.oauth-token-id >>
       provider-name: << parameters.provider-name >>
-      version: << parameters.version >>

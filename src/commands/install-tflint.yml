@@ -20,7 +20,7 @@ steps:
         if [ "<<parameters.tflint-version >>" == "latest" ]; then
           TFLINT_VERSION=$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
         else
-          TFLINT_VERSION=<<parameters.tfenv-version>>
+          TFLINT_VERSION=<<parameters.tflint-version>>
         fi
 
         echo "Installing ${TFLINT_VERSION} of tflint"
@@ -28,6 +28,6 @@ steps:
         curl -s -o tflint.zip https://github.com/terraform-linters/tflint/releases/download/$TFLINT_VERSION/tflint_linux_amd64.zip
 
         mkdir -p ~/.bin
-        unzip tfenv.zip -d ~/.bin/
+        unzip tflint.zip -d ~/.bin/
 
         echo "export PATH=$PATH:~/.bin/" >> $BASH_ENV
