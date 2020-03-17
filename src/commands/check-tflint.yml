@@ -5,4 +5,4 @@ steps:
   - run:
       name: Check with TFLint
       command: |
-        /usr/local/bin/tflint
+        tflint
