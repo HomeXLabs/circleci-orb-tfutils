@@ -11,16 +11,16 @@ jobs:
     docker:
       - image: circleci/node
     steps:
-    - checkout
-    - run:
-        name: Create release
-        command: |
-          export SEMANTIC_RELEASE_PACKAGE=${CIRCLE_PROJECT_REPONAME}
-          npx -p semantic-release -p semantic-release/git -p semantic-release/changelog -p semantic-release-slack-bot semantic-release
-    - slack/status:
-        fail_only: true
-        failure_message: ":rotating_light: Circle Vault Orb release has failed! $FAILURE_MESSAGE"
-        webhook: $SLACK_WEBHOOK
+      - checkout
+      - run:
+          name: Create release
+          command: |
+            export SEMANTIC_RELEASE_PACKAGE=${CIRCLE_PROJECT_REPONAME}
+            npx -p semantic-release -p semantic-release/git -p semantic-release/changelog -p semantic-release-slack-bot semantic-release
+      - slack/status:
+          fail_only: true
+          failure_message: ":rotating_light: Circle Vault Orb release has failed! $FAILURE_MESSAGE"
+          webhook: $SLACK_WEBHOOK
 
   publish-orb:
     description: |
@@ -28,17 +28,17 @@ jobs:
     docker:
       - image: circleci/circleci-cli
     steps:
-    - checkout
-    - attach_workspace:
-        at: workspace
-    - orb-tools/publish:
-        orb-ref: homexlabs/tfutils@${CIRCLE_TAG:1}
-        orb-path: workspace/orb.yml
-        token-variable: CIRCLE_RELEASE_TOKEN
-    - orb-tools/post-pr-comment:
-        bot-token-variable: GITHUB_TOKEN
-        bot-user: devopsheroes
-        comment: "New version of the orb published!"
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - orb-tools/publish:
+          orb-ref: homexlabs/tfutils@${CIRCLE_TAG:1}
+          orb-path: workspace/orb.yml
+          token-variable: CIRCLE_RELEASE_TOKEN
+      - orb-tools/post-pr-comment:
+          bot-token-variable: GITHUB_TOKEN
+          bot-user: devopsheroes
+          comment: "New version of the orb published!"
 
 workflows:
   orb-validate-and-release:
@@ -49,20 +49,20 @@ workflows:
               ignore: /.*/
       - orb-tools/pack:
           requires:
-          - orb-tools/lint
+            - orb-tools/lint
       - orb-tools/publish-dev:
           name: publish-dev-orb
           orb-name: homexlabs/tfutils
           branch-sha-version-ref: 'dev:$CIRCLE_BRANCH'
           publish-branch-sha-version: true
           requires:
-          - orb-tools/pack
+            - orb-tools/pack
           filters:
             branches:
               ignore: master
       - create-release:
           requires:
-          - orb-tools/pack
+            - orb-tools/pack
           filters:
             branches:
               only: master
@@ -77,7 +77,7 @@ workflows:
               only: /^v\d+\.\d+\.\d+$/
       - publish-orb:
           requires:
-          - orb-tools/pack
+            - orb-tools/pack
           filters:
             branches:
               ignore: /.*/
