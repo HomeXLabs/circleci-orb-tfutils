@@ -9,6 +9,7 @@ parameters:
     default: latest
 
 steps:
+  - install-tfenv
   - run:
       name: Install Terraform
       command: |

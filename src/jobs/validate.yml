@@ -9,9 +9,15 @@ parameters:
     type: env_var_name
     description: Terraform Cloud Token ID
     default: TERRAFORM_TOKEN
+  terraform-version:
+    type: string
+    description: Install a specific version of Terraform.
+    default: latest
 
 steps:
   - checkout
+  - install-terraform:
+      terraform-version: << parameters.terraform-version >>
   - write-tfc-credentials:
       terraform-token: << parameters.terraform-token >>
   - check-terraform-fmt
