@@ -18,7 +18,7 @@ steps:
         fi
 
         if [ "<<parameters.tfenv-version >>" == "latest" ]; then
-          TFENV_VERSION=$(curl -s https://api.github.com/repos/tfutils/tfenv/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+          TFENV_VERSION="latest version"
         else
           TFENV_VERSION=<<parameters.tfenv-version>>
         fi
@@ -27,7 +27,10 @@ steps:
 
         mkdir -p ~/.tfenv
         git clone https://github.com/tfutils/tfenv.git ~/.tfenv
-        cd ~/.tfenv
-        git checkout tags/${TFENV_VERSION}
+
+        if [ "<<parameters.tfenv-version >>" != "latest" ]; then
+          cd ~/.tfenv
+          git checkout tags/v${TFENV_VERSION}
+        fi
 
         echo "export PATH=$PATH:~/.tfenv/bin/" >> $BASH_ENV
