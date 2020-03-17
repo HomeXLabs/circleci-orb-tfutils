@@ -25,10 +25,8 @@ steps:
 
         echo "Installing ${TFENV_VERSION} of tfenv"
 
-        curl -L -s -o tfenv.zip https://github.com/tfutils/tfenv/archive/${TFENV_VERSION}.zip
-
         mkdir -p ~/.tfenv
-        unzip tfenv.zip -d ~/.tfenv/
-        mv ~/.tfenv/*/* ~/.tfenv/
+        git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+        git checkout tags/${TFENV_VERSION}
 
         echo "export PATH=$PATH:~/.tfenv/bin/" >> $BASH_ENV
