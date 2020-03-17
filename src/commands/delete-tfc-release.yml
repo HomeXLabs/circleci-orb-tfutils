@@ -1,6 +1,7 @@
 description: >
   Delete a version from Terraform Cloud Module Registry
-  Note: When module-name and/or provider-name are set to "find" the environment variable `CIRCLE_PROJECT_REPONAME` will be used to find these values, this does assume your repository follows the recommended format of `terraform-provider-module`.
+  Note: When module-name and/or provider-name are set to "find" the environment variable `CIRCLE_PROJECT_REPONAME` will be used to find these values,
+  this does assume your repository follows the recommended format of `terraform-provider-module`.
 
 parameters:
   module-name:

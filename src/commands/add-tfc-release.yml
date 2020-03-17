@@ -1,6 +1,7 @@
 description: >
   Add a module to Terraform Cloud Module Registry, this should be ran after a release has been done using GitHub
-  Note: When module-name and/or provider-name are set to "find" the environment variable `CIRCLE_PROJECT_REPONAME` will be used to find these values, this does assume your repository follows the recommended format of `terraform-provider-module`.
+  Note: When module-name and/or provider-name are set to "find" the environment variable `CIRCLE_PROJECT_REPONAME` will be used to find these values,
+  this does assume your repository follows the recommended format of `terraform-provider-module`.
 
 parameters:
   module-name:
