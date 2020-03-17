@@ -1,0 +1,85 @@
+version: 2.1
+
+orbs:
+  orb-tools: circleci/orb-tools@9.0.0
+  slack: circleci/slack@3.3.0
+
+jobs:
+  create-release:
+    description: |
+      Creates the release using Semantic Release
+    docker:
+      - image: circleci/node
+    steps:
+    - checkout
+    - run:
+        name: Create release
+        command: |
+          export SEMANTIC_RELEASE_PACKAGE=${CIRCLE_PROJECT_REPONAME}
+          npx -p semantic-release -p semantic-release/git -p semantic-release/changelog -p semantic-release-slack-bot semantic-release
+    - slack/status:
+        fail_only: true
+        failure_message: ":rotating_light: Circle Vault Orb release has failed! $FAILURE_MESSAGE"
+        webhook: $SLACK_WEBHOOK
+
+  publish-orb:
+    description: |
+      Uses the CLI to promote a dev version of an orb to the registry.
+    docker:
+      - image: circleci/circleci-cli
+    steps:
+    - checkout
+    - attach_workspace:
+        at: workspace
+    - orb-tools/publish:
+        orb-ref: homexlabs/vault@${CIRCLE_TAG:1}
+        orb-path: workspace/orb.yml
+        token-variable: CIRCLE_RELEASE_TOKEN
+    - orb-tools/post-pr-comment:
+        bot-token-variable: GITHUB_TOKEN
+        bot-user: devopsheroes
+        comment: "New version of the orb published!"
+
+workflows:
+  orb-validate-and-release:
+    jobs:
+      - orb-tools/lint:
+          filters:
+            tags:
+              ignore: /.*/
+      - orb-tools/pack:
+          requires:
+          - orb-tools/lint
+      - orb-tools/publish-dev:
+          name: publish-dev-orb
+          orb-name: homexlabs/vault
+          branch-sha-version-ref: 'dev:$CIRCLE_BRANCH'
+          publish-branch-sha-version: true
+          requires:
+          - orb-tools/pack
+          filters:
+            branches:
+              ignore: master
+      - create-release:
+          requires:
+          - orb-tools/pack
+          filters:
+            branches:
+              only: master
+
+  orb-publishing-tag:
+    jobs:
+      - orb-tools/pack:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+      - publish-orb:
+          requires:
+          - orb-tools/pack
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+$/

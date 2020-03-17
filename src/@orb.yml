@@ -1,0 +1,10 @@
+version: 2.1
+
+description: >
+  Common Terraform Utlities
+
+  Notes:
+  - The commands are all relatively generic, they can be used to cobble together your own custom jobs, the jobs on other hand are faily specific since they assume you are using Terraform Cloud for modules, Vault to get AWS creds and GitHub to store your modules.
+
+orbs:
+  vault: homexlabs/vault@1.0.0

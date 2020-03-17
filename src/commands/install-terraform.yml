@@ -1,0 +1,22 @@
+description: >
+  Installs terraform using tflint, if needed, and adds the path to PATH.
+  Can optionally specify the version to be installed, by default it installs the latest version.
+
+parameters:
+  terraform-version:
+    type: string
+    description: Install a specific version of Terraform.
+    default: latest
+
+steps:
+  - run:
+      name: Install Terraform
+      command: |
+        if [ "<<parameters.terraform-version >>" == "latest" ]; then
+          TERRAFORM_VERSION=""
+        else
+          TERRAFORM_VERSION=<<parameters.terraform-version>>
+        fi
+
+        tfenv install ${TERRAFORM_VERSION}
+        tfenv use ${TERRAFORM_VERSION}

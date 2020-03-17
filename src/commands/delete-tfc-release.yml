@@ -1,0 +1,60 @@
+description: >
+  Delete a version from Terraform Cloud Module Registry
+  Note: When module-name and/or provider-name are set to "find" the environment variable `CIRCLE_PROJECT_REPONAME` will be used to find these values, this does assume your repository follows the recommended format of `terraform-provider-module`.
+
+parameters:
+  module-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  provider-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  terraform-token:
+    type: env_var_name
+    description: Terraform Cloud Token ID
+    default: TERRAFORM_TOKEN
+  version:
+    type: string
+    description: The version that needs to be deleted (we use 0.0.1 as the version number for dev releases)
+    default: 0.0.1
+
+steps:
+  - run:
+      name: Delete release << parameters.version >> on TFC
+      command: |
+        if [ "<< parameters.module-name >>" == "find" ]; then
+          MODULE_NAME=$(echo ${CIRCLE_PROJECT_REPONAME} | cut -d"-" -f3-)
+        else
+          MODULE_NAME=<< parameters.provider-name >>
+        fi
+        if [ "<< parameters.provider-name >>" == "find" ]; then
+          PROVIDER_NAME=$(echo ${CIRCLE_PROJECT_REPONAME} | cut -d"-" -f2)
+        else
+          PROVIDER_NAME=<< parameters.provider-name >>
+        fi
+
+        if curl -f -s \
+          --header "Authorization: Bearer $<< parameters.terraform-token >>" \
+          --header "Content-Type: application/vnd.api+json" \
+          https://app.terraform.io/api/registry/v1/modules/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/versions; then
+
+          VERSIONS=$(curl -f -s \
+            --header "Authorization: Bearer $<< parameters.terraform-token >>" \
+            --header "Content-Type: application/vnd.api+json" \
+            https://app.terraform.io/api/registry/v1/modules/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/versions | tee /dev/tty | jq '[.modules[0].versions[] | select(.version=="<< parameters.version >>")] | length')
+
+          if [ "${VERSIONS}" == "1" ]; then
+            echo "Old development version found, deleting..."
+            curl -f -s \
+              --header "Authorization: Bearer $TERRAFORM_DELETE_TOKEN" \
+              --header "Content-Type: application/vnd.api+json" \
+              --request POST \
+              https://app.terraform.io/api/v2/registry-modules/actions/delete/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/0.0.1
+          else
+            echo "Old development verison not found, skipping..."
+          fi
+        else
+          echo "Module was not found at all."
+        fi

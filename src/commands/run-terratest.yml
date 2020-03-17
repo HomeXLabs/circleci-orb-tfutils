@@ -1,0 +1,25 @@
+description: >
+  Using Terratest run Unit tests on Terraform.
+
+parameters:
+  test-directory:
+    type: string
+    description: The directory the tests are in
+    default: ~/project/tests
+  test-timeout:
+    type: string
+    description: How long the tests are allowed to run for with h, m, or s postfix
+    default: 30m
+  report-directory:
+    type: string
+    description: The directory to store the test results
+    default: /tmp/test-results
+
+steps:
+  - run:
+      name: Run Terra Tests
+      working_directory: << parameters.test-directory >>
+      command: |
+        go get -u github.com/jstemmer/go-junit-report
+        mkdir -p << parameters.report-directory >>
+        go test -timeout=<< parameters.test-timeout >> -v 2>&1 | tee /dev/tty | go-junit-report > << parameters.report-directory >>/terratest.xml
