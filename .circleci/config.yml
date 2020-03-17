@@ -32,7 +32,7 @@ jobs:
     - attach_workspace:
         at: workspace
     - orb-tools/publish:
-        orb-ref: homexlabs/vault@${CIRCLE_TAG:1}
+        orb-ref: homexlabs/tfutils@${CIRCLE_TAG:1}
         orb-path: workspace/orb.yml
         token-variable: CIRCLE_RELEASE_TOKEN
     - orb-tools/post-pr-comment:
@@ -52,7 +52,7 @@ workflows:
           - orb-tools/lint
       - orb-tools/publish-dev:
           name: publish-dev-orb
-          orb-name: homexlabs/vault
+          orb-name: homexlabs/tfutils
           branch-sha-version-ref: 'dev:$CIRCLE_BRANCH'
           publish-branch-sha-version: true
           requires:
