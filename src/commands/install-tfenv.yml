@@ -27,6 +27,7 @@ steps:
 
         mkdir -p ~/.tfenv
         git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+        cd ~/.tfenv
         git checkout tags/${TFENV_VERSION}
 
         echo "export PATH=$PATH:~/.tfenv/bin/" >> $BASH_ENV
