@@ -68,7 +68,7 @@ steps:
         else
           echo "Module was not found:"
 
-          cat \<< EOF >> ~/.data.json
+          cat \<< EOF >> data.json
         {
           "data": {
             "attributes": {
@@ -87,6 +87,6 @@ steps:
             --header "Authorization: Bearer $<< parameters.terraform-token >>" \
             --header "Content-Type: application/vnd.api+json" \
             --request POST \
-            --data @.data.json \
+            --data @data.json \
             https://app.terraform.io/api/v2/registry-modules
         fi
