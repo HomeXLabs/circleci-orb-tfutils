@@ -44,7 +44,7 @@ steps:
           VERSIONS=$(curl -f -s \
             --header "Authorization: Bearer $<< parameters.terraform-token >>" \
             --header "Content-Type: application/vnd.api+json" \
-            https://app.terraform.io/api/registry/v1/modules/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/versions | tee /dev/tty | jq '[.modules[0].versions[] | select(.version=="<< parameters.version >>")] | length')
+            https://app.terraform.io/api/registry/v1/modules/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/versions | jq '[.modules[0].versions[] | select(.version=="<< parameters.version >>")] | length')
 
           if [ "${VERSIONS}" == "1" ]; then
             echo "Old development version found, deleting..."
@@ -52,7 +52,7 @@ steps:
               --header "Authorization: Bearer $<< parameters.terraform-token >>" \
               --header "Content-Type: application/vnd.api+json" \
               --request POST \
-              https://app.terraform.io/api/v2/registry-modules/actions/delete/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/0.0.1
+              https://app.terraform.io/api/v2/registry-modules/actions/delete/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/0.0.1 && echo "... deleted." || (echo "Error deleting module!" && exit 1)
           else
             echo "Old development verison not found, skipping..."
           fi
