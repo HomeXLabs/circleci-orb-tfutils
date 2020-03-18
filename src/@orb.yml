@@ -8,4 +8,4 @@ description: >
     They assume you are using Terraform Cloud for modules, Vault to get AWS creds and GitHub to store your modules.
 
 orbs:
-  vault: homexlabs/vault@1.0.0
+  vault: homexlabs/vault@1.1.1

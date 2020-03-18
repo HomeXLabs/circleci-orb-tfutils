@@ -83,7 +83,6 @@ steps:
   - vault/get-aws-creds:
       aws-profile-name: << parameters.aws-profile-name >>
       aws-region: << parameters.aws-region >>
-      vault-addr: << parameters.vault-addr >>
       vault-path: << parameters.vault-path >>
       configure-default-region: false
   - run-terratest:
