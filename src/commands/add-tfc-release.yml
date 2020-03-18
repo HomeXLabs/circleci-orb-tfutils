@@ -69,19 +69,19 @@ steps:
           echo "Module was not found:"
 
           cat \<< EOF >> ~/.data.json
-          {
-            "data": {
-              "attributes": {
-                "vcs-repo": {
-                  "identifier":"${CIRCLE_PROJECT_USERNAME}/terraform-${PROVIDER_NAME}-${MODULE_NAME}",
-                  "oauth-token-id":"${<< parameters.oauth-token-id >>}",
-                  "display_identifier":"${CIRCLE_PROJECT_USERNAME}/terraform-${PROVIDER_NAME}-${MODULE_NAME}"
-                }
-              },
-              "type":"registry-modules"
-            }
+        {
+          "data": {
+            "attributes": {
+              "vcs-repo": {
+                "identifier":"${CIRCLE_PROJECT_USERNAME}/terraform-${PROVIDER_NAME}-${MODULE_NAME}",
+                "oauth-token-id":"${<< parameters.oauth-token-id >>}",
+                "display_identifier":"${CIRCLE_PROJECT_USERNAME}/terraform-${PROVIDER_NAME}-${MODULE_NAME}"
+              }
+            },
+            "type":"registry-modules"
           }
-          EOF
+        }
+        EOF
 
           curl \
             --header "Authorization: Bearer $<< parameters.terraform-token >>" \

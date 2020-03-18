@@ -49,7 +49,7 @@ steps:
           if [ "${VERSIONS}" == "1" ]; then
             echo "Old development version found, deleting..."
             curl -f -s \
-              --header "Authorization: Bearer $TERRAFORM_DELETE_TOKEN" \
+              --header "Authorization: Bearer $<< parameters.terraform-token >>" \
               --header "Content-Type: application/vnd.api+json" \
               --request POST \
               https://app.terraform.io/api/v2/registry-modules/actions/delete/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/0.0.1
