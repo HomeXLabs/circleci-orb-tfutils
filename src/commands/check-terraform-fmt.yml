@@ -1,5 +1,5 @@
 description: >
-  Using terraform fmt command checks to see if all of the terraform files in the repository are formatted properly.
+  Using terraform fmt command checks to see if all of the terraform files in the repository are formatted properly. This assumes Terraform is already installed.
 
 steps:
   - run:

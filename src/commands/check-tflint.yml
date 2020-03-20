@@ -1,5 +1,6 @@
 description: >
   Using tflint command to see if all of the terraform files in the repository have the correct syntax.
+  This assumes tflint is already installed.
 
 steps:
   - run:

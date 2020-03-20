@@ -1,5 +1,6 @@
 description: >
   Using Terratest run Unit tests on Terraform.
+  This assumes go is available on the image.
 
 parameters:
   test-directory:

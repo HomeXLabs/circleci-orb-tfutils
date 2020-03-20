@@ -1,5 +1,8 @@
 description: >
   Using terraform validate command checks to see if all of the terraform files in the repository have the correct syntax.
+  This assumes Terraform is already installed.
+
+  Note: if there is an error here regarding the region not being set, just set the "AWS_DEFAULT_REGION" environment variable in the project or context.
 
 steps:
   - run:
