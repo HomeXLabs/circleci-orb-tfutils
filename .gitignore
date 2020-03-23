@@ -1,0 +1,3 @@
+# Ignore packed config file
+config.yml
+!.circleci/config.yml

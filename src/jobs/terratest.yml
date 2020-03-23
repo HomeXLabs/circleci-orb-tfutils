@@ -1,0 +1,93 @@
+description: |
+  Uses Terratest to run some Terraform Tests. Assumes it is using Vault to obtain the AWS credentials.
+
+docker:
+  - image: circleci/golang
+
+parameters:
+  aws-profile-name:
+    description: Profile name to be configured.
+    type: string
+    default: default
+  aws-region:
+    description: |
+      Env var of AWS region to operate in
+      (defaults to AWS_REGION)
+    type: env_var_name
+    default: AWS_REGION
+  module-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  oauth-token-id:
+    type: env_var_name
+    description: Terraform Cloud OAuth Token ID (VCS)
+    default: TERRAFORM_OAUTH_TOKEN
+  provider-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  report-directory:
+    type: string
+    description: The directory to store the test results
+    default: /tmp/test-results
+  terraform-token:
+    type: env_var_name
+    description: Terraform Cloud Token ID
+    default: TERRAFORM_TOKEN
+  terraform-version:
+    type: string
+    description: Install a specific version of Terraform.
+    default: latest
+  test-directory:
+    type: string
+    description: The directory the tests are in
+    default: ~/project/tests
+  test-timeout:
+    type: string
+    description: How long the tests are allowed to run for with h, m, or s postfix
+    default: 30m
+  vault-addr:
+    type: string
+    description: Override VAULT_ADDR coming from context.
+    default: VAULT_ADDR
+  vault-path:
+    type: string
+    description: The vault path to the AWS Role.
+    default: "aws/creds/terraform-aws"
+  vault-role-id:
+    type: env_var_name
+    description: Vault AppRole ID
+    default: VAULT_ROLE_ID
+  vault-secret-id:
+    type: env_var_name
+    description: Vault AppRole Secret ID
+    default: VAULT_SECRET_ID
+  vault-version:
+    type: string
+    description: Install a specific version of vault.
+    default: latest
+
+steps:
+  - checkout
+  - install-terraform:
+      terraform-version: << parameters.terraform-version >>
+  - write-tfc-credentials:
+      terraform-token: << parameters.terraform-token >>
+  - vault/install:
+      vault-version: << parameters.vault-version >>
+  - vault/login:
+      vault-addr: << parameters.vault-addr >>
+      vault-role-id: << parameters.vault-role-id >>
+      vault-secret-id: << parameters.vault-secret-id >>
+  - vault/get-aws-creds:
+      aws-profile-name: << parameters.aws-profile-name >>
+      aws-region: << parameters.aws-region >>
+      vault-path: << parameters.vault-path >>
+      configure-default-region: false
+  - run-terratest:
+      report-directory: << parameters.report-directory >>
+      test-directory: << parameters.test-directory >>
+      test-timeout: << parameters.test-timeout >>
+  - store_test_results:
+      path: << parameters.report-directory >>

@@ -1,0 +1,33 @@
+description: >
+  Installs tflint, if needed, and adds the path to PATH.
+  Can optionally spcify the version to be installed, however will not install if another version is already installed.
+
+parameters:
+  tflint-version:
+    type: string
+    description: Install a specific version of tflint.
+    default: latest
+
+steps:
+  - run:
+      name: Install TFLint
+      command: |
+        if which tflint > /dev/null; then
+          echo "TFLint is already installed. Skipping."
+          exit 0
+        fi
+
+        if [ "<<parameters.tflint-version >>" == "latest" ]; then
+          TFLINT_VERSION=$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+        else
+          TFLINT_VERSION=<<parameters.tflint-version>>
+        fi
+
+        echo "Installing ${TFLINT_VERSION} of tflint"
+
+        curl -L -s -o tflint.zip https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint_linux_amd64.zip
+
+        mkdir -p ~/.bin
+        unzip tflint.zip -d ~/.bin/
+
+        echo "export PATH=$PATH:~/.bin/" >> $BASH_ENV

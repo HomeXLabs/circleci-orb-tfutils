@@ -1,0 +1,31 @@
+description: |
+  Uses Terratest to run some Terraform Tests. Assumes it is using Vault to obtain the AWS credentials.
+
+docker:
+  - image: circleci/golang
+
+parameters:
+  terraform-token:
+    type: env_var_name
+    description: Terraform Cloud Token ID
+    default: TERRAFORM_TOKEN
+  terraform-version:
+    type: string
+    description: Install a specific version of Terraform.
+    default: latest
+  tflint-version:
+    type: string
+    description: Install a specific version of tflint.
+    default: latest
+
+steps:
+  - checkout
+  - install-terraform:
+      terraform-version: << parameters.terraform-version >>
+  - install-tflint:
+      tflint-version: << parameters.tflint-version >>
+  - write-tfc-credentials:
+      terraform-token: << parameters.terraform-token >>
+  - check-terraform-fmt
+  - check-terraform-validate
+  - check-tflint

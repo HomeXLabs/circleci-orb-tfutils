@@ -1,0 +1,93 @@
+description: >
+  Add a module to Terraform Cloud Module Registry, this should be ran after a release has been done using GitHub.
+
+  Note: When module-name and/or provider-name are set to "find" the environment variable `CIRCLE_PROJECT_REPONAME` will be used to find these values,
+  this does assume your repository name follows the recommended format of `terraform-provider-module`.
+
+parameters:
+  module-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  oauth-token-id:
+    type: env_var_name
+    description: Terraform Cloud OAuth Token ID (VCS)
+    default: TERRAFORM_OAUTH_TOKEN
+  provider-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  terraform-token:
+    type: env_var_name
+    description: Terraform Cloud Token ID
+    default: TERRAFORM_TOKEN
+
+steps:
+  - run:
+      name: Checking for Terraform environment variables
+      command: |
+        echo "Checking for the existence of Terraform Cloud Environment Variables"
+        [ -z "$<<parameters.terraform-token>>" ] && ERROR=true && \
+          echo "ERROR: <<parameters.terraform-token>> env is not set." || \
+          echo "Found <<parameters.terraform-token>>: ** HIDDEN **"
+        [ -z "$<<parameters.oauth-token-id>>" ] && ERROR=true && \
+          echo "ERROR: <<parameters.oauth-token-id>> env is not set." || \
+          echo "Found <<parameters.oauth-token-id>>: $<<parameters.oauth-token-id>>"
+
+        echo
+        if [[ -n "$ERROR" ]]; then
+          echo "ERROR:"
+          echo
+          echo "You should check your projects or context Environment Variables page to see if you set <<parameters.terraform-token>>,"
+          echo "and <<parameters.oauth-token-id>>"
+          echo
+          exit 1
+        else
+          echo "Environment variables passed initial check, they are are all set."
+          echo
+        fi
+  - run:
+      name: Add module on TFC
+      command: |
+        if [ "<< parameters.module-name >>" == "find" ]; then
+          MODULE_NAME=$(echo ${CIRCLE_PROJECT_REPONAME} | cut -d"-" -f3-)
+        else
+          MODULE_NAME=<< parameters.provider-name >>
+        fi
+        if [ "<< parameters.provider-name >>" == "find" ]; then
+          PROVIDER_NAME=$(echo ${CIRCLE_PROJECT_REPONAME} | cut -d"-" -f2)
+        else
+          PROVIDER_NAME=<< parameters.provider-name >>
+        fi
+
+        if curl -f -s \
+          --header "Authorization: Bearer $<< parameters.terraform-token >>" \
+          --header "Content-Type: application/vnd.api+json" \
+          https://app.terraform.io/api/registry/v1/modules/HomeX/${MODULE_NAME}/${PROVIDER_NAME}/versions; then
+
+          echo "Module has already been published on TFC."
+        else
+          echo "Module was not found, adding..."
+
+          cat \<< EOF >> data.json
+        {
+          "data": {
+            "attributes": {
+              "vcs-repo": {
+                "identifier":"${CIRCLE_PROJECT_USERNAME}/terraform-${PROVIDER_NAME}-${MODULE_NAME}",
+                "oauth-token-id":"${<< parameters.oauth-token-id >>}",
+                "display_identifier":"${CIRCLE_PROJECT_USERNAME}/terraform-${PROVIDER_NAME}-${MODULE_NAME}"
+              }
+            },
+            "type":"registry-modules"
+          }
+        }
+        EOF
+
+          curl -f -s \
+            --header "Authorization: Bearer $<< parameters.terraform-token >>" \
+            --header "Content-Type: application/vnd.api+json" \
+            --request POST \
+            --data @data.json \
+            https://app.terraform.io/api/v2/registry-modules && echo "... added." || (echo "Error adding module!" && exit 1)
+        fi

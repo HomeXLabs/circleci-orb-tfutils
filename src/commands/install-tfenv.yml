@@ -1,0 +1,36 @@
+description: >
+  Installs tfenv, if needed, and adds the path to PATH.
+  Can optionally spcify the version to be installed, however will not install if another version is already installed.
+
+parameters:
+  tfenv-version:
+    type: string
+    description: Install a specific version of tfenv.
+    default: latest
+
+steps:
+  - run:
+      name: Install TFenv
+      command: |
+        if which tfenv > /dev/null; then
+          echo "TFenv is already installed. Skipping."
+          exit 0
+        fi
+
+        if [ "<<parameters.tfenv-version >>" == "latest" ]; then
+          TFENV_VERSION="latest version"
+        else
+          TFENV_VERSION=<<parameters.tfenv-version>>
+        fi
+
+        echo "Installing ${TFENV_VERSION} of tfenv"
+
+        mkdir -p ~/.tfenv
+        git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+
+        if [ "<<parameters.tfenv-version >>" != "latest" ]; then
+          cd ~/.tfenv
+          git checkout tags/v${TFENV_VERSION}
+        fi
+
+        echo "export PATH=$PATH:~/.tfenv/bin/" >> $BASH_ENV

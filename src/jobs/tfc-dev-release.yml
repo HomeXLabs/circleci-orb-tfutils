@@ -1,0 +1,46 @@
+description: |
+  Creates a Terraform Cloud Module release, this job is not meant for production releases since it deletes a specific version and re-releases as the same version.
+  Production releases should just be a GitHub release with a new version number.
+
+docker:
+  - image: circleci/golang
+
+parameters:
+  terraform-token:
+    type: env_var_name
+    description: Terraform Cloud Token ID
+    default: TERRAFORM_TOKEN
+  module-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  oauth-token-id:
+    type: env_var_name
+    description: Terraform Cloud OAuth Token ID (VCS)
+    default: TERRAFORM_OAUTH_TOKEN
+  provider-name:
+    type: string
+    description: The module provider name, like aws, google, kubernetes
+    default: find
+  version:
+    type: string
+    description: The version that needs to be released (we use 0.0.1 as the version number for dev releases)
+    default: 0.0.1
+
+steps:
+  - checkout
+  - delete-tfc-release:
+      terraform-token: << parameters.terraform-token >>
+      module-name: << parameters.module-name >>
+      provider-name: << parameters.provider-name >>
+      version: << parameters.version >>
+  - run:
+      name: Create dev release
+      command: |
+        go get -u github.com/tcnksm/ghr
+        ghr -prerelease -recreate -n "Development Release" -b "Latest development release - Branch: $CIRCLE_BRANCH" -c $CIRCLE_BRANCH v<< parameters.version >>
+  - add-tfc-release:
+      terraform-token: << parameters.terraform-token >>
+      module-name: << parameters.module-name >>
+      oauth-token-id: << parameters.oauth-token-id >>
+      provider-name: << parameters.provider-name >>

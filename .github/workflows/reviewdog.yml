@@ -1,0 +1,17 @@
+name: reviewdog
+on: [pull_request]
+jobs:
+  spelling:
+    name: runner / spelling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: languagetool
+        uses: reviewdog/action-languagetool@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          level: info
+          disabled_rules: 'THERE_RE_MANY,DOUBLE_PUNCTUATION,WHITESPACE_RULE,EN_QUOTES,DASH_RULE,WORD_CONTAINS_UNDERSCORE,UPPERCASE_SENTENCE_START,ARROWS,COMMA_PARENTHESIS_WHITESPACE,UNLIKELY_OPENING_PUNCTUATION,SENTENCE_WHITESPACE,CURRENCY,EN_UNPAIRED_BRACKETS,PHRASE_REPETITION,PUNCTUATION_PARAGRAPH_END,METRIC_UNITS_EN_US,ENGLISH_WORD_REPEAT_BEGINNING_RULE'
