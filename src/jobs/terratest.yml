@@ -54,7 +54,7 @@ parameters:
   vault-path:
     type: string
     description: The vault path to the AWS Role.
-    default: "aws/creds/terraform-aws"
+    default: "aws/creds/terraform-sbx-modules"
   vault-role-id:
     type: env_var_name
     description: Vault AppRole ID
