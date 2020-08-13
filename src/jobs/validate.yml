@@ -12,7 +12,7 @@ parameters:
   terraform-version:
     type: string
     description: Install a specific version of Terraform.
-    default: latest
+    default: latest-required
   tflint-version:
     type: string
     description: Install a specific version of tflint.
