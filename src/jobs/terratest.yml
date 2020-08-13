@@ -38,7 +38,7 @@ parameters:
   terraform-version:
     type: string
     description: Install a specific version of Terraform.
-    default: latest
+    default: latest-required
   test-directory:
     type: string
     description: The directory the tests are in
