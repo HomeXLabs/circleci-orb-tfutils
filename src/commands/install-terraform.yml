@@ -17,7 +17,18 @@ steps:
           go get github.com/hashicorp/terraform-config-inspect
 
           echo "Finding terraform version from code"
-          MIN_VERSION=$(/go/bin/terraform-config-inspect ./ --json | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
+          TERRAFORM_JSON=$(/go/bin/terraform-config-inspect ./ --json)
+
+          if [[ "$TERRAFORM_JSON" != *"required_core"* ]]; then
+            echo "There is no required_version set in your project. Add the following to \"version.tf\""
+            echo "terraform {"
+            echo "  required_version = \"~> 0.13.0\""
+            echo "}
+            echo "Exiting..."
+            exit 1
+          fi
+          
+          MIN_VERSION= | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
           echo "Found version: ${MIN_VERSION}"
 
           TERRAFORM_VERSION="latest:^${MIN_VERSION}"
