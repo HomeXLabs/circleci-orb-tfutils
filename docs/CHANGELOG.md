@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.0.1...v1.1.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* add space around ] ([62148b1](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/62148b1644b4a183737f6273c59534fe44100346))
+* update path to current directory ([b054e12](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/b054e1222f1cfbab24348079123a5add7dcb61eb))
+
+
+### Features
+
+* add latest-required terraform version ([b32b4ed](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/b32b4ed5bfab3c70a829746d19a10418cdddc786))
+
 # 1.0.0 (2020-05-08)
 
 
