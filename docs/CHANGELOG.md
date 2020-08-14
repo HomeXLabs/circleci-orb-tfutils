@@ -1,3 +1,18 @@
+## [1.1.1](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.1.0...v1.1.1) (2020-08-14)
+
+
+### Bug Fixes
+
+* add some more checking and output ([0a822eb](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/0a822ebe4582f572f3be69d52741f8e6f692b8ee))
+* add some output for testing ([6a7af23](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/6a7af2319a83b223f2305d636a0bcdd81abc8744))
+* add some output for testing ([63d0215](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/63d0215d90f3a3e28879a57ba39fb893b4a733c1))
+* add true to ensure the command always exits with 0 ([1184d5c](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/1184d5c362c93d13349c26d24572cd65d3481a20))
+* bug where we weren't parsing the JSON anymore ([89b3195](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/89b3195eefca522d256f2db40fb2d345bde5e065))
+* missing quote ([750e1fe](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/750e1fe2a91f45de8ec4a2333f572fb374764287))
+* remove trailing spaces ([4d0920a](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/4d0920aa73d9e6a4738778ee27fb58f4fd64905c))
+* test output of command ([b0c89d6](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/b0c89d6aaccebcc4343689dfb9b7cc220b34c57e))
+* use absolute path since it doesn't always seem to work properly ([67425f1](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/67425f1e82b8f921a99810bb5679d79dbaa7a10d))
+
 # [1.1.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.0.1...v1.1.0) (2020-08-13)
 
 
