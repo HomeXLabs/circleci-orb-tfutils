@@ -17,8 +17,7 @@ steps:
           go get github.com/hashicorp/terraform-config-inspect
 
           echo "Finding terraform version from code"
-          terraform-config-inspect ./ --json | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2
-          MIN_VERSION=$(terraform-config-inspect ./ --json | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
+          MIN_VERSION=$(/go/bin/terraform-config-inspect ./ --json | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
           echo "Found version: ${MIN_VERSION}"
 
           TERRAFORM_VERSION="latest:^${MIN_VERSION}"
