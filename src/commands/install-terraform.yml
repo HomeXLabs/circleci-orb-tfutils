@@ -16,11 +16,26 @@ steps:
         if [ "<<parameters.terraform-version >>" == "latest-required" ]; then
           go get github.com/hashicorp/terraform-config-inspect
 
-          MIN_VERSION=$(terraform-config-inspect ./ --json | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
+          echo "Finding terraform version from code"
+          TERRAFORM_JSON=$(/go/bin/terraform-config-inspect ./ --json || true)
+
+          if [[ "$TERRAFORM_JSON" != *"required_core"* ]]; then
+            echo "There is no required_version set in your project. Add the following to \"version.tf\""
+            echo "terraform {"
+            echo "  required_version = \"~> 0.13.0\""
+            echo "}"
+            echo "Exiting..."
+            exit 1
+          fi
+
+          MIN_VERSION=$(echo $TERRAFORM_JSON | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
+          echo "Found version: ${MIN_VERSION}"
+
           TERRAFORM_VERSION="latest:^${MIN_VERSION}"
         else
           TERRAFORM_VERSION=<<parameters.terraform-version>>
         fi
 
+        echo "Going to run tfenv with: ${TERRAFORM_VERSION}"
         tfenv install ${TERRAFORM_VERSION}
         tfenv use ${TERRAFORM_VERSION}
