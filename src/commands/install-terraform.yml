@@ -23,7 +23,7 @@ steps:
             echo "There is no required_version set in your project. Add the following to \"version.tf\""
             echo "terraform {"
             echo "  required_version = \"~> 0.13.0\""
-            echo "}
+            echo "}"
             echo "Exiting..."
             exit 1
           fi
