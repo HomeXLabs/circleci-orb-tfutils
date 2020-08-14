@@ -28,7 +28,7 @@ steps:
             exit 1
           fi
 
-          MIN_VERSION= | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
+          MIN_VERSION=$(echo $TERRAFORM_JSON | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
           echo "Found version: ${MIN_VERSION}"
 
           TERRAFORM_VERSION="latest:^${MIN_VERSION}"
