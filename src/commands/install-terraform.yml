@@ -27,7 +27,7 @@ steps:
             echo "Exiting..."
             exit 1
           fi
-          
+
           MIN_VERSION= | jq '.required_core[0]' -r | tr -cd '[:digit:].' | cut -d"." -f1,2)
           echo "Found version: ${MIN_VERSION}"
 
