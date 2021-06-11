@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.1.1...v1.1.2) (2021-06-11)
+
+
+### Bug Fixes
+
+* update validation command syntax ([#5](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/5)) ([aaa48d2](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/aaa48d2d470b55871f72211aac94523885c95f0b))
+
 ## [1.1.1](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.1.0...v1.1.1) (2020-08-14)
 
 
