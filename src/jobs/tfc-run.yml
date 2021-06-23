@@ -1,0 +1,27 @@
+description: Triggers a new run on Terraform Cloud
+
+docker:
+  - image: circleci/golang
+
+parameters:
+  organization:
+    type: string
+    description: Terraform Cloud organization name
+  workspace:
+    type: string
+    description: Terraform Cloud workspace name
+  path:
+    type: string
+    description: Path to the Terraform configuration files
+    default: .
+
+steps:
+  - checkout
+  - lookup-workspace:
+    organization: <<parameters.organization>>
+    workspace: <<parameters.workspace>>
+  - create-config-version:
+    path: <<parameters.path>>
+  - trigger-run:
+    organization: <<parameters.organization>>
+    workspace: <<parameters.workspace>>
