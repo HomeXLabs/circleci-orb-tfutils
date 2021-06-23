@@ -1,4 +1,5 @@
-description: Looks up a workspace ID and persists it as TF_WORKSPACE_ID to BASH_ENV
+description: >
+  Looks up a workspace ID and persists it as TF_WORKSPACE_ID to BASH_ENV
 
 parameters:
   organization:
@@ -14,4 +15,4 @@ steps:
         TF_ORG_NAME: << parameters.organization >>
         TF_WORKSPACE_NAME: << parameters.workspace >>
       name: Lookup workspace ID
-      command: << include(scripts/lookup-workspace-id.sh) >>
+      command: <<include(scripts/lookup-workspace-id.sh)>>
