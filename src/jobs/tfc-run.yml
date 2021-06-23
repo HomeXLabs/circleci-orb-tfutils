@@ -18,10 +18,10 @@ parameters:
 steps:
   - checkout
   - lookup-workspace:
-    organization: << parameters.organization >>
-    workspace: << parameters.workspace >>
+      organization: << parameters.organization >>
+      workspace: << parameters.workspace >>
   - create-config-version:
-    path: << parameters.path >>
+      path: << parameters.path >>
   - trigger-run:
-    organization: << parameters.organization >>
-    workspace: << parameters.workspace >>
+      organization: << parameters.organization >>
+      workspace: << parameters.workspace >>
