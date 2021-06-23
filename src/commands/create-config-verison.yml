@@ -11,6 +11,6 @@ parameters:
 steps:
   - run:
       environment:
-        TF_CONTENT_DIRECTORY: <<parameters.path>>
+        TF_CONTENT_DIRECTORY: << parameters.path >>
       name: Create and upload a new configuration version
-      command: <<include(scripts/create-configuration-version.sh)>>
+      command: << include(scripts/create-configuration-version.sh) >>

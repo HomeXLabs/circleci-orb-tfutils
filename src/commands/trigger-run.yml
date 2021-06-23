@@ -11,7 +11,7 @@ parameters:
 steps:
   - run:
       environment:
-        TF_ORG_NAME: <<parameters.organization>>
-        TF_WORKSPACE_NAME: <<parameters.workspace>>
+        TF_ORG_NAME: << parameters.organization >>
+        TF_WORKSPACE_NAME: << parameters.workspace >>
       name: Trigger a run on Terraform CLoud
-      command: <<include(scripts/trigger-run.sh)>>
+      command: << include(scripts/trigger-run.sh) >>
