@@ -6,8 +6,8 @@ source $BASH_ENV;
 
 UPLOAD_FILE_NAME="./content-$(date +%s).tar.gz"
 
-echo "Creating archive of Terraform files in $TF_CONTENT_DIRECTORY/..."
-tar -zcvf "$UPLOAD_FILE_NAME" -C "$TF_CONTENT_DIRECTORY" *.tf .terraform.lock.hcl || {
+echo "Creating archive of Terraform files in $TF_CONTENT_DIRECTORY/"
+(cd ./$TF_CONTENT_DIRECTORY && tar -zcvf "../$UPLOAD_FILE_NAME" *.tf .terraform.lock.hcl) || {
   echo "Failed to create archive!"
   exit 1
 }
