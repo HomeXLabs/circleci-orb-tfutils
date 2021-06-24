@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.1.2...v1.2.0) (2021-06-24)
+
+
+### Features
+
+* add job to create tfc runs ([#8](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/8)) ([a95e670](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/a95e6700854b92139aff1b3df111fd365bf20c21))
+
 ## [1.1.2](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.1.1...v1.1.2) (2021-06-11)
 
 
