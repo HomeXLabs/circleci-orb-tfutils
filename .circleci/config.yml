@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  orb-tools: circleci/orb-tools@9.0.0
+  orb-tools: circleci/orb-tools@10.0.4
   slack: circleci/slack@3.3.0
 
 jobs:
@@ -48,6 +48,7 @@ workflows:
             tags:
               ignore: /.*/
       - orb-tools/pack:
+          use-orb-pack: true
           requires:
             - orb-tools/lint
       - orb-tools/publish-dev:
@@ -70,6 +71,7 @@ workflows:
   orb-publishing-tag:
     jobs:
       - orb-tools/pack:
+          use-orb-pack: true
           filters:
             branches:
               ignore: /.*/

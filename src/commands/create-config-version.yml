@@ -1,0 +1,16 @@
+description: >
+  Creates and uploads a new configuration version. Expects TF_WORKSPACE_ID to be present in BASH_ENV.
+  Persists TF_CONFIG_VERSION_ID to BASH_ENV.
+
+parameters:
+  path:
+    type: string
+    description: Path to the Terraform files
+    default: .
+
+steps:
+  - run:
+      environment:
+        TF_CONTENT_DIRECTORY: << parameters.path >>
+      name: Create and upload a new configuration version
+      command: <<include(scripts/create-configuration-version.sh)>>

@@ -1,0 +1,21 @@
+description: >
+  Triggers a run on Terraform Cloud. Expects TF_CONFIG_VERSION_ID to be present in BASH_EVN
+
+parameters:
+  organization:
+    type: string
+    description: Organization name
+  workspace:
+    type: string
+    description: Name of the workspace
+
+steps:
+  - run:
+      name: Verify configuration version is ready
+      command: <<include(scripts/config-ready.sh)>>
+  - run:
+      environment:
+        TF_ORG_NAME: << parameters.organization >>
+        TF_WORKSPACE_NAME: << parameters.workspace >>
+      name: Trigger a run on Terraform Cloud
+      command: <<include(scripts/trigger-run.sh)>>
