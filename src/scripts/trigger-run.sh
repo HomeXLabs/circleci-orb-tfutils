@@ -5,7 +5,7 @@ source $BASH_ENV;
 
 # Queue run 
 
-echo "Queueing run on Terraform Cloud ($TF_ORG_NAME/$TF_WORKSPACE_NAME)..."
+echo "Queueing run on Terraform Cloud ($TF_ORG_NAME/$TF_WORKSPACE_NAME) with configuration verison '$TF_CONFIG_VERSION_ID'..."
 
 GIT_COMMIT_DESC=$(git log --format=%B -n 1 $CIRCLE_SHA1)
 
@@ -49,7 +49,8 @@ RUN_ID=$(jq -r '.data.id' <<< $RESPONSE_RUN)
 
 if [ $RUN_ID = "null" ]; then
   echo "Failed to trigger run!" 
-  echo "$RESPONSE_RUN"
+  echo "REQUEST: $RUN_JSON_STRING"
+  echo "RESPONSE: $RESPONSE_RUN"
   exit 1
 fi
 
