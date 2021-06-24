@@ -6,13 +6,13 @@ attempts=0
 
 while true; do
   echo "Checking status of configuration version '$TF_CONFIG_VERSION_ID'..."
-  RESPONSE_STATUS=$(curl \
+  RESPONSE_STATUS=$(curl -s \
   --header "Authorization: Bearer $TERRAFORM_TOKEN" \
   --header "Content-Type: application/vnd.api+json" \
   --request GET \
   https://app.terraform.io/api/v2/configuration-versions/$TF_CONFIG_VERSION_ID)
 
-  STATUS=$(jq -r '.data.attributes.status' <<< $RESPONSE_RUN)
+  STATUS=$(jq -r '.data.attributes.status' <<< $RESPONSE_STATUS)
 
   if [ $STATUS = 'uploaded' ]; then
     echo "Upload status confirmed!"
