@@ -7,10 +7,15 @@ parameters:
     type: string
     description: Path to the Terraform files
     default: .
+  plan-only:
+    type: boolean
+    description: If the run should be speculative
+    default: false
 
 steps:
   - run:
       environment:
         TF_CONTENT_DIRECTORY: << parameters.path >>
+        PLAN_ONLY: << parameters.plan-only >>
       name: Create and upload a new configuration version
       command: <<include(scripts/create-configuration-version.sh)>>

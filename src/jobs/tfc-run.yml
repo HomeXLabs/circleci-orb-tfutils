@@ -14,6 +14,10 @@ parameters:
     type: string
     description: Path to the Terraform configuration files
     default: .
+  plan-only:
+    type: boolean
+    description: If the run should be speculative
+    default: false
 
 steps:
   - checkout
@@ -22,6 +26,7 @@ steps:
       workspace: << parameters.workspace >>
   - create-config-version:
       path: << parameters.path >>
+      plan-only: << parameters.plan-only >>
   - trigger-run:
       organization: << parameters.organization >>
       workspace: << parameters.workspace >>
