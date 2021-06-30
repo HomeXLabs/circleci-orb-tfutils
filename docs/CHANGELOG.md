@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.2.0...v1.3.0) (2021-06-30)
+
+
+### Features
+
+* allow speculative plans ([#9](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/9)) ([15b862c](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/15b862c35e29b78b660626c6b4c1fd005550cd31))
+
 # [1.2.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.1.2...v1.2.0) (2021-06-24)
 
 
