@@ -14,6 +14,8 @@ while true; do
 
   STATUS=$(jq -r '.data.attributes.status' <<< $RESPONSE_STATUS)
 
+  STATUS='pending'
+
   if [ $STATUS = 'uploaded' ]; then
     echo "Upload status confirmed!"
     exit 0
