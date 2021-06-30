@@ -2,7 +2,7 @@
 
 source $BASH_ENV;
 
-attempts=0
+ATTEMPTS=0
 
 while true; do
   echo "Checking status of configuration version '$TF_CONFIG_VERSION_ID'..."
@@ -18,15 +18,15 @@ while true; do
     echo "Upload status confirmed!"
     exit 0
   elif [ $STATUS = 'pending' ]; then
-    if [ $attempts = 2 ]; then
+    if [ $ATTEMPTS = 2 ]; then
       echo "Status check timed out after 10s, exiting..."
       exit 1
     fi
     echo "Upload pending, retrying in 5s..."
-    ((attempts++))
+    ATTEMPTS=$((ATTEMPTS + 1))
     sleep 5
   elif [ $STATUS = 'errored' ] || [ $STATUS = 'null' ]; then
-    echo "Configuration version $STATUS!"
+    echo "Configuration version $STATUS, exiting..."
     exit 1
   fi
 done
