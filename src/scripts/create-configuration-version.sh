@@ -18,14 +18,19 @@ echo "$UPLOAD_FILE_NAME created successfully!"
 
 echo "Creating new configuration version..."
 
-echo '{
+REQUEST_JSON_STRING=$( jq -n \
+--arg plan "$PLAN_ONLY" \
+'{
   "data": {
     "type": "configuration-versions",
     "attributes": {
-      "auto-queue-runs": false
+      "auto-queue-runs": false,
+      "speculative" : $plan
     } 
   }  
-}' > ./create_config_version.json
+}')
+
+echo "$REQUEST_JSON_STRING" > ./create_config_version.json
 
 RESPONSE_CONFIG=$(curl -s \
   --header "Authorization: Bearer $TERRAFORM_TOKEN" \
