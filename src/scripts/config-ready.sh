@@ -14,6 +14,11 @@ while true; do
 
   STATUS=$(jq -r '.data.attributes.status' <<< $RESPONSE_STATUS)
 
+  echo "$STATUS"
+
+  STATUS='pending'
+
+  echo "DEBUG: Entering if block"
   if [ $STATUS = 'uploaded' ]; then
     echo "Upload status confirmed!"
     exit 0
@@ -23,10 +28,14 @@ while true; do
       exit 1
     fi
     echo "Upload pending, retrying in 5s..."
+    echo "DEBUG: Calling increment of attempts"
     ((attempts++))
+    echo "DEBUG: Calling sleep"
     sleep 5
+    echo "DEBUG: Sleep over"
   elif [ $STATUS = 'errored' ] || [ $STATUS = 'null' ]; then
-    echo "Configuration version $STATUS!"
+    echo "Configuration version $STATUS, exiting..."
     exit 1
   fi
+  echo "DEBUG: Reached end of elif block"
 done
