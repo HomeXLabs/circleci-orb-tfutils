@@ -2,7 +2,7 @@
 
 source $BASH_ENV;
 
-attempts=0
+ATTEMPTS=0
 
 while true; do
   echo "Checking status of configuration version '$TF_CONFIG_VERSION_ID'..."
@@ -29,7 +29,7 @@ while true; do
     fi
     echo "Upload pending, retrying in 5s..."
     echo "DEBUG: Calling increment of attempts"
-    ((attempts++))
+    ATTEMPTS=$((ATTEMPTS + 1))
     echo "DEBUG: Calling sleep"
     sleep 5
     echo "DEBUG: Sleep over"
