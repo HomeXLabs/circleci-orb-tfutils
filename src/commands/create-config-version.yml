@@ -22,4 +22,3 @@ steps:
   - run:
       name: Verify configuration version is ready
       command: <<include(scripts/config-ready.sh)>>
-      
