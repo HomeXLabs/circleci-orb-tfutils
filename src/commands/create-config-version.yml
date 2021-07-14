@@ -19,3 +19,7 @@ steps:
         PLAN_ONLY: << parameters.plan-only >>
       name: Create and upload a new configuration version
       command: <<include(scripts/create-configuration-version.sh)>>
+  - run:
+      name: Verify configuration version is ready
+      command: <<include(scripts/config-ready.sh)>>
+      
