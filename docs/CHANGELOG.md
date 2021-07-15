@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.1...v1.3.2) (2021-07-15)
+
+
+### Bug Fixes
+
+* trigger run only ([#11](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/11)) ([b31f500](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/b31f5001b270440c7c406e9046f7017fa30315d0))
+
 ## [1.3.1](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.0...v1.3.1) (2021-06-30)
 
 
