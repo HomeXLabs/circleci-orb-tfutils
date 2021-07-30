@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.2...v1.3.3) (2021-07-30)
+
+
+### Bug Fixes
+
+* **vault:** update vault orb version ([#12](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/12)) ([ac82b42](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/ac82b4259edfda3dd2162257954a0f5e1e3ffd3f))
+
 ## [1.3.2](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.1...v1.3.2) (2021-07-15)
 
 
