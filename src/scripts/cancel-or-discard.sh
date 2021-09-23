@@ -22,7 +22,7 @@ declare -a runs=$(
 echo "Runs IDs to discard/cancel: $runs"
 
 # Attempt to discard first - works for pending/queued runs, if fails attempt to cancel, works for runs currently being planned
-for run in "${runs[@]}"
+for run in `${runs[@]}`
 do 
   if [ ! -z $run ]; then
     DISCARD_RESPONSE=$(curl -s \
