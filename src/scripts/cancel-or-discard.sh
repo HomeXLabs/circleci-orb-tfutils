@@ -13,7 +13,7 @@ RESPONSE_RUNS=$(curl -s \
 # Filter the response to run IDs triggered by CCI that would be holding back future runs
 declare -a runs=$(
   jq -r '.data[] 
-  | select (.attributes.message | startswith("")) 
+  | select (.attributes.message | startswith("CCI-")) 
   | select(.attributes.status as $status 
   | ["pending","plan_queued","planning","planned","cost_estimating","cost_estimated","policy_checking","policy_override","policy_checked"] 
   | index($status)) 
@@ -25,15 +25,14 @@ echo "Runs IDs to discard/cancel: $runs"
 for run in "${runs[@]}"
 do 
   if [[ ! -z $run ]]; then
+    echo "Attempting to discard run with id: $run"
     DISCARD_RESPONSE=$(curl -s \
     --header "Authorization: Bearer $TERRAFORM_TOKEN" \
-    --header "Content-Type: application/vnd.api+json" \
     --request POST \
     https://app.terraform.io/api/v2/runs/$run/actions/discard)
     if [[ $DISCARD_RESPONSE != null ]]; then
       CANCEL_RESPONSE=$(curl -s \
       --header "Authorization: Bearer $TERRAFORM_TOKEN" \
-      --header "Content-Type: application/vnd.api+json" \
       --request POST \
       https://app.terraform.io/api/v2/runs/$run/actions/cancel)
       if [[ $CANCEL_RESPONSE != null ]]; then
