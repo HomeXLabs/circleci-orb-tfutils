@@ -1,9 +1,6 @@
 #!/bin/bash
 
-#source $BASH_ENV;
-
-TERRAFORM_TOKEN="ijwdjX8JPdv90g.atlasv1.kI58hshfsG6bG3LR3ug0jfPp2wFKCv9eyvm1797mzYM3KgRFpjPbLMgsK4L7ka7ttdY"
-TF_WORKSPACE_ID="ws-6VSrguRA56vWDJUN"
+source $BASH_ENV;
 
 echo "Checking for previous runs to clear for $TF_ORG_NAME/$TF_WORKSPACE_NAME..."
 
