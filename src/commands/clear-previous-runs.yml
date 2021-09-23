@@ -1,0 +1,18 @@
+description: >
+  Clears all pending, planning, and queued runs for a workspace. Expects TF_WORKSPACE_ID to be present in BASH_ENV (from `lookup-workspace` step)
+
+parameters:
+  organization:
+    type: string
+    description: Organization name
+  workspace:
+    type: string
+    description: Name of the workspace
+
+steps:
+  - run:
+      environment:
+        TF_ORG_NAME: << parameters.organization >>
+        TF_WORKSPACE_NAME: << parameters.workspace >>
+      name: Clear previous runs from Terraform cloud
+      command: <<include(scripts/cancel-or-discard.sh)>>
