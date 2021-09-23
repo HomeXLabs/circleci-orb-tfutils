@@ -59,7 +59,7 @@ else
   }')
 fi
 
-echo $"REQUEST:\n$RUN_JSON_STRING"
+echo $"REQUEST: $RUN_JSON_STRING"
 
 echo "$RUN_JSON_STRING" > ./create_run.json
 

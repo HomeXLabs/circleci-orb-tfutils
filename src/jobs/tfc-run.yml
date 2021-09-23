@@ -10,12 +10,22 @@ parameters:
   workspace:
     type: string
     description: Terraform Cloud workspace name
+  clear-previous:
+    type: boolean
+    default: true
+    description: Whether to discard/cancel previous runs triggered by CCI
 
 steps:
   - checkout
   - lookup-workspace:
       organization: << parameters.organization >>
       workspace: << parameters.workspace >>
+  - when:
+      condition: << parameters.clear-previous >>
+      steps:
+        - clear-previous-runs:
+            organization: << parameters.organization >>
+            workspace: << parameters.workspace >>
   - trigger-run:
       organization: << parameters.organization >>
       workspace: << parameters.workspace >>
