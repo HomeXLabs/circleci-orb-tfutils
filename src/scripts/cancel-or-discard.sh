@@ -31,7 +31,7 @@ do
     --request POST \
     https://app.terraform.io/api/v2/runs/$run/actions/discard)
     if [[ $DISCARD_RESPONSE != null ]]; then
-      echo "Unable to disacrd, attempting to cancel run with id: $run"
+      echo "Unable to discard, attempting to cancel run with id: $run"
       CANCEL_RESPONSE=$(curl -s \
       --header "Authorization: Bearer $TERRAFORM_TOKEN" \
       --request POST \
