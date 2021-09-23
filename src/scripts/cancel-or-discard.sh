@@ -13,7 +13,7 @@ RESPONSE_RUNS=$(curl -s \
 # Filter the response to run IDs triggered by CCI that would be holding back future runs
 declare -a runs=$(
   jq -r '.data[] 
-  | select (.attributes.message | startswith("CCI-")) 
+  | select (.attributes.message | startswith("")) 
   | select(.attributes.status as $status 
   | ["pending","plan_queued","planning","planned","cost_estimating","cost_estimated","policy_checking","policy_override","policy_checked"] 
   | index($status)) 
@@ -22,9 +22,9 @@ declare -a runs=$(
 echo "Runs IDs to discard/cancel: $runs"
 
 # Attempt to discard first - works for pending/queued runs, if fails attempt to cancel, works for runs currently being planned
-for run in `${runs[@]}`
+for run in "${runs[@]}"
 do 
-  if [ ! -z $run ]; then
+  if [[ ! -z $run ]]; then
     DISCARD_RESPONSE=$(curl -s \
     --header "Authorization: Bearer $TERRAFORM_TOKEN" \
     --header "Content-Type: application/vnd.api+json" \
