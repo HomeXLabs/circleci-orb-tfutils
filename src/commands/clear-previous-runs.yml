@@ -1,5 +1,5 @@
 description: >
-  Clears all pending, planning, and queued runs for a workspace. Expects TF_WORKSPACE_ID to be present in BASH_ENV
+  Clears all pending, planning, and queued runs for a workspace. Expects TF_WORKSPACE_ID to be present in BASH_ENV (from `lookup-workspace` step)
 
 parameters:
   organization:
