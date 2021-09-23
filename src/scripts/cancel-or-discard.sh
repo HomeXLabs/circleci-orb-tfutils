@@ -10,14 +10,12 @@ RESPONSE_RUNS=$(curl -s \
   --header "Content-Type: application/vnd.api+json" \
   https://app.terraform.io/api/v2/workspaces/$TF_WORKSPACE_ID/runs?page%5Bsize%5D=50)
 
-#echo $RESPONSE_RUNS | jq 'select(.data[].attributes.status | IN(["pending","plan_queued","planning","planned","cost_estimating","cost_estimated","policy_checking","policy_checked"])) | .data[].id'
-
 # Filter the response to run IDs triggered by CCI that would be holding back future runs
 declare -a runs=$(
   jq -r '.data[] 
   | select (.attributes.message | startswith("CCI-")) 
   | select(.attributes.status as $status 
-  | ["pending","plan_queued","planning","planned","cost_estimating","cost_estimated","policy_checking","policy_checked"] 
+  | ["pending","plan_queued","planning","planned","cost_estimating","cost_estimated","policy_checking","policy_override","policy_checked"] 
   | index($status)) 
   | .id' <<< "$RESPONSE_RUNS")
 
@@ -40,7 +38,6 @@ do
       https://app.terraform.io/api/v2/runs/$run/actions/cancel)
       if [[ $CANCEL_RESPONSE != null ]]; then
         echo "Failed to discard/cancel https://app.terraform.io/app/$TF_ORG_NAME/$TF_WORKSPACE_NAME/runs/$run"
-        exit 1
       else
         echo "Cancelled https://app.terraform.io/app/$TF_ORG_NAME/$TF_WORKSPACE_NAME/runs/$run"
       fi
