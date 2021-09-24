@@ -16,7 +16,7 @@ jobs:
           name: Create release
           command: |
             export SEMANTIC_RELEASE_PACKAGE=${CIRCLE_PROJECT_REPONAME}
-            npx -p semantic-release -p semantic-release/git -p semantic-release/changelog -p semantic-release-slack-bot semantic-release
+            npx -p semantic-release -p semantic-release/git -p semantic-release/changelog semantic-release
       - slack/status:
           fail_only: true
           failure_message: ":rotating_light: Circle Vault Orb release has failed! $FAILURE_MESSAGE"
