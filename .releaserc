@@ -8,10 +8,6 @@
     ["@semantic-release/git", {
       "assets": ["docs/CHANGELOG.md"],
     }],
-    "@semantic-release/github",
-    ["semantic-release-slack-bot", {
-      "notifyOnSuccess": true,
-      "notifyOnFail": true
-    }]
+    "@semantic-release/github"
   ]
 }
