@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.3...v1.4.0) (2021-09-24)
+
+
+### Features
+
+* clear previous runs from tfc workspace ([#13](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/13)) ([a9fd361](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/a9fd3612c57701d1ed2f1a94e0e937d1136b0d3a))
+
 ## [1.3.3](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.2...v1.3.3) (2021-07-30)
 
 
