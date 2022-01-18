@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.4.0...v1.4.1) (2022-01-18)
+
+
+### Bug Fixes
+
+* terraform init command no longer supports chdir arg ([#16](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/16)) ([92ab62d](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/92ab62dbb57c4be72a51c941fee7a55c0ada47ee))
+
 # [1.4.0](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.3.3...v1.4.0) (2021-09-24)
 
 
