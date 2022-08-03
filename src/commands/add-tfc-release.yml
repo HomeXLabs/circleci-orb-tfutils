@@ -60,6 +60,8 @@ steps:
           PROVIDER_NAME=<< parameters.provider-name >>
         fi
 
+        echo "Repo: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME, Provider: $PROVIDER_NAME, Module: $MODULE_NAME"
+
         if curl -f -s \
           --header "Authorization: Bearer $<< parameters.terraform-token >>" \
           --header "Content-Type: application/vnd.api+json" \
@@ -84,10 +86,10 @@ steps:
         }
         EOF
 
-          curl -f -s \
+          curl -s \
             --header "Authorization: Bearer $<< parameters.terraform-token >>" \
             --header "Content-Type: application/vnd.api+json" \
             --request POST \
             --data @data.json \
-            https://app.terraform.io/api/v2/registry-modules && echo "... added." || (echo "Error adding module!" && exit 1)
+            https://app.terraform.io/api/v2/registry-modules
         fi
