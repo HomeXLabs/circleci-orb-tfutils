@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.4.1...v1.4.2) (2022-10-26)
+
+
+### Bug Fixes
+
+* pin to pre go-1.18 version ([#18](https://github.com/HomeXLabs/circleci-orb-tfutils/issues/18)) ([e17a935](https://github.com/HomeXLabs/circleci-orb-tfutils/commit/e17a93597b34742f22c0716f1f401db5e815206b))
+
 ## [1.4.1](https://github.com/HomeXLabs/circleci-orb-tfutils/compare/v1.4.0...v1.4.1) (2022-01-18)
 
 
