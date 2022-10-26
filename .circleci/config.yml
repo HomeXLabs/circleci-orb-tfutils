@@ -37,7 +37,7 @@ jobs:
           token-variable: CIRCLE_RELEASE_TOKEN
       - orb-tools/post-pr-comment:
           bot-token-variable: GITHUB_TOKEN
-          bot-user: devopsheroes
+          bot-user: scheduleengine-github
           comment: "New version of the orb published!"
 
 workflows:
