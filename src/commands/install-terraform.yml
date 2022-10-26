@@ -14,7 +14,7 @@ steps:
       name: Install Terraform
       command: |
         if [ "<<parameters.terraform-version >>" == "latest-required" ]; then
-          go get -d github.com/hashicorp/terraform-config-inspect@413b69327090029750844f6303b0767f10f6529d
+          go install github.com/hashicorp/terraform-config-inspect@413b69327090029750844f6303b0767f10f6529d
 
           echo "Finding terraform version from code"
           TERRAFORM_JSON=$(/go/bin/terraform-config-inspect ./ --json || true)
